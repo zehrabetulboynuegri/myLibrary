@@ -5,36 +5,50 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "BOOKS")
 public class Book {
- public Book(){}
+
 	@Id
 	@Column(name = "BOOK_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "ISBN")
 	private String isbn;
-	
+
 	@Column(name = "TITLE")
 	private String title;
-	
+
 	@Column(name = "SUBTITLE")
 	private String subtitle;
-	
+
 	@Column(name = "SERIES_NAME")
 	private String seriesName;
-	
+
 	@Column(name = "PAGES")
 	private int pages;
-	
+
 	@Column(name = "DESCRIPTION")
 	private String description;
 
-	public Book(int id, String isbn, String title, String subtitle, String seriesName, int pages, String description) {
+	@ManyToOne
+	@JoinColumn(name = "AUTHOR_ID")
+	private Author author;
+	@ManyToOne
+	@JoinColumn(name = "PUBLISHER_ID")
+	private Publisher publisher;
+
+	public Book() {
+	}
+
+	
+	public Book(int id, String isbn, String title, String subtitle, String seriesName, int pages, String description,
+			Author author, Publisher publisher) {
 		super();
 		this.id = id;
 		this.isbn = isbn;
@@ -43,7 +57,10 @@ public class Book {
 		this.seriesName = seriesName;
 		this.pages = pages;
 		this.description = description;
+		this.author = author;
+		this.publisher = publisher;
 	}
+
 
 	public int getId() {
 		return id;
@@ -101,8 +118,22 @@ public class Book {
 		this.description = description;
 	}
 
-	
+	public Author getAuthor() {
+		return author;
+	}
 
-	
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+
+
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
 
 }
